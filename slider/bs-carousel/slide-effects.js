@@ -5,8 +5,11 @@
        * Simple slide effect for BS-Slider
        * using custom effect.in/.out callback
        */
-      (function(slider, slideSpeed) {
+      (function(slider, slideInSpeed, slideOutSpeed) {
          var effects = {};
+
+          slideInSpeed === undefined ? 'slow' : slideInSpeed;
+          slideOutSpeed === undefined ? slideInSpeed : slideOutSpeed;
 
          effects.out = function(el, speed, callbackFn) {
             $(el).css({
@@ -28,19 +31,18 @@
 
          effects.out(
             $('.ce-bodytext', slider),
-            slideSpeed,
+            0,
             function() {
-               effects.in(this, slideSpeed);
+               effects.in(this, slideInSpeed);
               }
          );
          $(slider).on('slide.bs.carousel slid.bs.carousel', function (e) {
             if(e.type === 'slid') {
-              effects.in($('.ce-bodytext', this), slideSpeed);
+              effects.in($('.ce-bodytext', this), slideInSpeed);
             } else {
-              effects.out($('.ce-bodytext', this), slideSpeed);
+              effects.out($('.ce-bodytext', this), slideOutSpeed);
             }
           })
       })($('#slider-26'), 'slow');
-
   });
 })(jQuery);
